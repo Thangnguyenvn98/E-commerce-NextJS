@@ -9,6 +9,7 @@ import { ProductContext } from '@/components/ProductContext';
 
 export default function Home({ products }: { products: ProductType[] }) {
   const [searchName, setSearchName] = useState("");
+  //@ts-ignore
   const {setSelectedProduct} = useContext(ProductContext)
 
   const categoriesNames = [...new Set(products.map(product => product.category))];
@@ -23,7 +24,7 @@ export default function Home({ products }: { products: ProductType[] }) {
       setSuccess(true)
     }
 
-  },[])
+  },[setSelectedProduct])
 
   return (
     <div className=" p-5">

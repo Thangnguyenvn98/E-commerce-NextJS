@@ -1,11 +1,13 @@
 import { initMongoose } from "@/lib/mongoose";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
+import { NextApiRequest, NextApiResponse } from 'next';
+
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler(req, res) {
-     await initMongoose()
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  await initMongoose()
  
    
       // Create Checkout Sessions from body params.
@@ -17,7 +19,7 @@ export default async function handler(req, res) {
 
       let line_items = []
       for(let productId of uniqueIds) {
-        const quantity = productsIds.filter(id => id === productId).length
+        const quantity = productsIds.filter((id:string) => id === productId).length
         const product = products.find(product => product._id.toString() === productId)
         line_items.push({
           quantity,

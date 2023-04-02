@@ -5,10 +5,11 @@ import { ProductType } from "@/type/ProductType"
 
 
 export default function Product({_id,name,price,description,picture}:ProductType ){
+      //@ts-ignore
 
     const {setSelectedProduct} = useContext(ProductContext)
     function addProduct(){
-      setSelectedProduct(prev => [...prev,_id])
+      setSelectedProduct((prev: never[])=> [...prev,_id])
     }
     return (
 

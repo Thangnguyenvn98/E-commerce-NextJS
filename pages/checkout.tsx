@@ -5,6 +5,8 @@ import { ProductType } from "@/type/ProductType";
 import Image from "next/image";
 
 export default function CheckoutPage(){
+      //@ts-ignore
+
     const {selectedProduct, setSelectedProduct} = useContext(ProductContext)
     const[productsInfo,setProductsInfo]=useState<ProductType[]>([])
     const[name,setName]=useState('')
@@ -15,14 +17,14 @@ export default function CheckoutPage(){
 
 
     const addMoreProduct = (id:string) => {
-        setSelectedProduct(prev => [...prev,id])
+        setSelectedProduct((prev: never[]) => [...prev,id])
     }
 
     const reduceLessProduct = (id:string) =>{
         const currentIndex = selectedProduct.indexOf(id)
         if(currentIndex!== -1){
-            setSelectedProduct(prev => {
-                return prev.filter((value,index)=> index !== currentIndex
+            setSelectedProduct((prev:never[]) => {
+                return prev.filter((index:number)=> index !== currentIndex
                 )
             })
         }
@@ -51,7 +53,7 @@ export default function CheckoutPage(){
                 <div>No product in your cart  </div>
             )}
             {productsInfo.length && productsInfo.map(product=>{
-                const amount = selectedProduct.filter(id => id === product._id).length
+                const amount = selectedProduct.filter((id:string) => id === product._id).length
                 if(amount === 0)return
                 return(
                      <div key={product._id} className="flex gap-4 mb-5">
@@ -65,7 +67,7 @@ export default function CheckoutPage(){
                             <div className="grow">${product.price}</div>
                             <div>
                                 <button onClick={()=>reduceLessProduct(product._id)} className="rounded-xl py-2 px-4 bg-red-400 text-white">-</button>
-                                <span className="px-2">{selectedProduct.filter(id => id === product._id).length}</span>
+                                <span className="px-2">{selectedProduct.filter((id:string) => id === product._id).length}</span>
                                 
                                 <button onClick={()=>addMoreProduct(product._id)}className="rounded-xl py-2 px-4 bg-emerald-400 text-white">+</button>
                             </div>

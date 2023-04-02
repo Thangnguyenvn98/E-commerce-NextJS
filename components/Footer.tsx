@@ -6,6 +6,8 @@ import { ProductContext } from "./ProductContext";
 export default function Footer(){
     const router = useRouter()
     const path = router.pathname
+      //@ts-ignore
+
     const {selectedProduct} = useContext(ProductContext)
     return (
         <footer className="sticky bottom=0 flex justify-center items-center gap-12">
