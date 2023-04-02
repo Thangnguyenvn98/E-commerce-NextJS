@@ -1,13 +1,15 @@
 import Image from "next/image"
+import { useContext } from "react"
+import { ProductContext } from "./ProductContext"
+import { ProductType } from "@/type/ProductType"
 
-interface ProductProps {
-  name: string,
-  price: string,
-  description: string,
-  picture: string,
-}
 
-export default function Product({name,price,description,picture}: ProductProps){
+export default function Product({_id,name,price,description,picture}:ProductType ){
+
+    const {setSelectedProduct} = useContext(ProductContext)
+    function addProduct(){
+      setSelectedProduct(prev => [...prev,_id])
+    }
     return (
 
         <div className = "py-8">
@@ -16,7 +18,7 @@ export default function Product({name,price,description,picture}: ProductProps){
           <Image
       
       src={picture}
-      alt="Picture of the black iphone"
+      alt={name}
       width={500}
       height={500}
                   />  
@@ -28,7 +30,7 @@ export default function Product({name,price,description,picture}: ProductProps){
             
             <div className="flex mt-2">
               <div className="text-2xl font-bold grow">${price}</div>
-              <button className="bg-emerald-400 rounded-md text-white py-1 px-3">Add to Cart</button>
+              <button onClick={addProduct}className="bg-emerald-400 rounded-md text-white py-1 px-3">Add to Cart</button>
             </div>
             </div>
             </div>

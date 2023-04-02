@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Product from '@/components/Product';
 import { initMongoose } from '@/lib/mongoose';
 import { findAllProducts } from './api/products';
+import Footer from '../components/Footer';
+import { ProductType } from '@/type/ProductType';
 
-type Product = {
-  _id: string;
-  name: string;
-  description: string;
-  price: string;
-  category: string;
-  picture: string;
-}; 
 
-export default function Home({ products }: { products: Product[] }) {
+
+export default function Home({ products }: { products: ProductType[] }) {
   const [searchName, setSearchName] = useState("");
 
 
@@ -24,6 +19,7 @@ export default function Home({ products }: { products: Product[] }) {
 
   return (
     <div className=" p-5">
+      
       <input
         type="text"
         placeholder="Search for products ...."
@@ -49,7 +45,10 @@ export default function Home({ products }: { products: Product[] }) {
           </div>
         ))}
       </div>
+                    <Footer/>
+
     </div>
+    
   );
 }
 

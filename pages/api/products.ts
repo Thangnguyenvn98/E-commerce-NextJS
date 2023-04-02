@@ -7,7 +7,11 @@ export async function findAllProducts(){
 
 export default async function handle(req,res){
     await initMongoose()
-
-    res.json( await findAllProducts())
+    const {ids}= req.query
+    if(ids){
+        const idsArray = ids.split(",") //id array method to add unique id items to an array and find it then return
+        res.json(await Product.find({'_id':{$in:idsArray}}).exec()) //$in: meaning find _id in the array
+    }else{res.json( await findAllProducts())}
+    
 
 }
