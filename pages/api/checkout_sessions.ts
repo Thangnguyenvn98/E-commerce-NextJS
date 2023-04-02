@@ -1,4 +1,5 @@
 import { initMongoose } from "@/lib/mongoose";
+import Order from "@/models/Order";
 import Product from "@/models/Product";
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -8,6 +9,7 @@ export default async function handler(req, res) {
  
    
       // Create Checkout Sessions from body params.
+      const {name,address,province,country,phone} = req.body
       const productsIds = req.body.products.split(',')
       const uniqueIds = [...new Set(productsIds)]
       const products = await Product.find({_id: {$in:uniqueIds}}).exec()
@@ -25,7 +27,15 @@ export default async function handler(req, res) {
           unit_amount: product.price * 100,
         }})
       }
-
+      const order = await Order.create({
+        products: line_items,
+        name,
+        address,
+        province,
+        country,
+        phone,
+        paid:0,
+      })
       
       const session = await stripe.checkout.sessions.create({
         line_items: line_items,
@@ -33,8 +43,8 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       });
+     
       res.redirect(303, session.url);
 
-      res.json(req.method)
  
   }

@@ -83,7 +83,7 @@ export default function CheckoutPage(){
                     <input type="text" value={province} name="province" onChange={(e)=>setProvince(e.target.value)} placeholder="City, Province, Postal Code" className="bg-gray-200 w-full rounded-lg p-3 " />
                     <input type="text" value={country} name="country" placeholder ="Country " onChange={(e)=>setCountry(e.target.value)} className="bg-gray-200 w-full rounded-lg p-3"/>
 
-                    <input type="text" value={phone} name="phone"placeholder="Phone Number"  onChange={(e)=>setPhone(e.target.value)}className="bg-gray-200 w-full rounded-lg p-3 " />
+                    <input type="number" value={phone} name="phone"placeholder="Phone Number"  onChange={(e)=>setPhone(e.target.value)}className="bg-gray-200 w-full rounded-lg p-3 " />
 
 
                 </div>

@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Product from '@/components/Product';
 import { initMongoose } from '@/lib/mongoose';
 import { findAllProducts } from './api/products';
 import Footer from '../components/Footer';
 import { ProductType } from '@/type/ProductType';
-
+import { ProductContext } from '@/components/ProductContext';
 
 
 export default function Home({ products }: { products: ProductType[] }) {
   const [searchName, setSearchName] = useState("");
-
+  const {setSelectedProduct} = useContext(ProductContext)
 
   const categoriesNames = [...new Set(products.map(product => product.category))];
 
   if (searchName) {
     products = products.filter(product => product.name.toLowerCase().includes(searchName));
   }
+  const[success,setSuccess] = useState(false)
+  useEffect(()=>{
+    if(window.location.href.includes('success')){
+      setSelectedProduct([])
+      setSuccess(true)
+    }
+
+  },[])
 
   return (
     <div className=" p-5">
