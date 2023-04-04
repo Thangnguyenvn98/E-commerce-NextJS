@@ -20,15 +20,16 @@ export default function CheckoutPage(){
         setSelectedProduct((prev: never[]) => [...prev,id])
     }
 
-    const reduceLessProduct = (id:string) =>{
-        const currentIndex = selectedProduct.indexOf(id)
-        if(currentIndex!== -1){
-            setSelectedProduct((prev:never[]) => {
-                return prev.filter((index:number)=> index !== currentIndex
-                )
-            })
+    const reduceLessProduct = (id: string) => {
+        const index = selectedProduct.findIndex((itemId:string) => itemId === id);
+        if (index !== -1) {
+          setSelectedProduct((prev:never[]) => {
+            const updatedItems = [...prev];
+            updatedItems.splice(index, 1);
+            return updatedItems;
+          });
         }
-    }
+      };
     let delivery = 5
     let subtotal = 0
     if(selectedProduct?.length){
